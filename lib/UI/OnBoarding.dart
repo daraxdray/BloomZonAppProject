@@ -1,3 +1,4 @@
+import 'package:BloomZon/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
 import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/intro_views_flutter.dart';
@@ -37,7 +38,7 @@ final pages = [
       body: Container(
         height: 250.0,
         child: Text(
-          'E commerce application template \nbuy this code template in codecanyon',textAlign: TextAlign.center,
+          'Bloomzon is an ecommerce solution, providing all sales for you at finger tip',textAlign: TextAlign.center,
           style: _fontDescriptionStyle
         ),
       ),
@@ -98,8 +99,8 @@ class _onBoardingState extends State<onBoarding> {
     return IntroViewsFlutter(
       pages,
       pageButtonsColor: Colors.black45,
-      skipText: Text("SKIP",style: _fontDescriptionStyle.copyWith(color: Colors.deepPurpleAccent,fontWeight: FontWeight.w800,letterSpacing: 1.0),),
-      doneText: Text("DONE",style: _fontDescriptionStyle.copyWith(color: Colors.deepPurpleAccent,fontWeight: FontWeight.w800,letterSpacing: 1.0),),
+      skipText: Text("SKIP",style: _fontDescriptionStyle.copyWith(color: Constant.primaryColor,fontWeight: FontWeight.w800,letterSpacing: 1.0),),
+      doneText: Text("DONE",style: _fontDescriptionStyle.copyWith(color: Constant.primaryColor,fontWeight: FontWeight.w800,letterSpacing: 1.0),),
       onTapDoneButton: (){
         Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (_,__,___)=> new ChoseLogin(),
         transitionsBuilder: (_,Animation<double> animation,__,Widget widget){

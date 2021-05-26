@@ -33,11 +33,43 @@ dependencies:
   transparent_image: ^0.1.0
   flutter_slidable: ^0.4.9
   flutter_rating: ^0.0.2
+  flutter_launcher_icons: "^0.8.0"
+  select_form_field: "^1.1.0"
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  fluttertoast: ^7.0.2
+#  dotted_border: ^1.0.6
+  flutter_spinkit: ^3.1.0
+#  page_transition: ^1.1.6
+  font_awesome_flutter: ^8.8.1
+  dotted_line: ^2.0.1
+#  intl_phone_number_input: ^0.4.6+2
+#  carousel_pro: ^1.0.0
+#  google_maps_flutter: ^0.5.28+1
+#  flutter_slidable: ^0.5.7
+#  horizontal_calendar_widget: ^1.0.2
+  bloc:
+  http:
+  equatable:
+  flutter_bloc:
+  path_provider:
+  shared_preferences:
+#  google_fonts: ^1.1.0
+#  select_form_field: "^1.1.0"
+#  url_launcher: ^5.4.10
+  flutter_inappwebview:
+  swipedetector: ^1.2.0
 
+
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/blogo_wbg.png
+  "
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -124,11 +156,6 @@ flutter:
     - assets/img/search2.png
     - assets/img/chat.png
     - assets/img/notifications-button.png
-    - assets/img/baner1.png
-    - assets/img/baner2.png
-    - assets/img/baner3.png
-    - assets/img/baner4.png
-    - assets/img/baner12.png
     - assets/icon/book.png
     - assets/icon/camera.png
     - assets/icon/fashion.png
@@ -141,42 +168,8 @@ flutter:
     - assets/icon/pc.png
     - assets/icon/sport.png
     - assets/icon/ticket.png
-    - assets/imgPromo/Discount1.png
-    - assets/imgPromo/Discount2.png
-    - assets/imgPromo/Discount3.png
-    - assets/imgPromo/Discount4.png
-    - assets/imgPromo/Discount5.png
-    - assets/imgPromo/Discount6.png
-    - assets/img/flashsaleicon.png
-    - assets/imgItem/mackbook.jpg
-    - assets/imgItem/fashion1.jpg
-    - assets/imgItem/flashsale2.jpg
-    - assets/imgItem/flashsale3.jpg
-    - assets/imgItem/flashsale4.jpg
-    - assets/imgItem/flashsale5.jpg
-    - assets/imgItem/category1.png
-    - assets/imgItem/category2.png
-    - assets/imgItem/category3.png
-    - assets/imgItem/category4.png
-    - assets/imgItem/category5.png
-    - assets/imgItem/category6.png
-    - assets/imgItem/category7.png
-    - assets/imgItem/category8.png
-    - assets/imgItem/acesoris1.jpg
-    - assets/imgItem/beauty1.jpg
-    - assets/imgItem/girl1.jpg
-    - assets/imgItem/kids1.jpg
-    - assets/imgItem/man1.jpg
-    - assets/imgItem/shoes1.jpg
-    - assets/imgItem/shoes2.jpg
     - assets/img/notmessage.png
     - assets/img/noNotification.png
-    - assets/imgBrand/appleHeader.png
-    - assets/imgBrand/fendiHeader.png
-    - assets/imgBrand/gucciHeader.png
-    - assets/imgBrand/nikeHeader.png
-    - assets/imgBrand/samsungHeader.png
-    - assets/imgBrand/sonyHeader.png
     - assets/img/womanface.jpg
     - assets/icon/truck.png
     - assets/icon/chat.png
@@ -186,31 +179,6 @@ flutter:
     - assets/icon/aboutapp.png
     - assets/icon/shopping-cart.png
     - assets/icon/message.png
-    - assets/img/bannerMan1.png
-    - assets/img/bannerMan2.png
-    - assets/img/bannerMan3.png
-    - assets/img/bannerMan4.png
-    - assets/imgCamera/CameraDigital.png
-    - assets/imgCamera/CompactCamera.png
-    - assets/imgCamera/ActionCamera.png
-    - assets/imgCamera/cameraItem1.png
-    - assets/imgCamera/cameraItem2.png
-    - assets/imgCamera/cameraItem3.png
-    - assets/imgCamera/cameraItem4.png
-    - assets/imgPromo/imgPromo1.jpg
-    - assets/imgPromo/imgPromo2.jpg
-    - assets/imgPromo/imgPromo3.jpg
-    - assets/imgPromo/imgPromo4.jpg
-    - assets/imgPromo/imgPromo5.jpg
-    - assets/imgPromo/imgPromo6.jpg
-    - assets/imgPromo/imgPromo7.jpg
-    - assets/imgPromo/imgPromo8.jpg
-    - assets/imgCategoryMan/Man1.jpg
-    - assets/imgCategoryMan/Man2.jpg
-    - assets/imgCategoryMan/Man3.jpg
-    - assets/imgCategoryMan/Man4.jpg
-    - assets/imgCategoryMan/Man5.jpg
-    - assets/imgCategoryMan/Man6.jpg
     - assets/img/bag.png
     - assets/img/courier.png
     - assets/img/house.png
@@ -220,11 +188,7 @@ flutter:
     - assets/img/checklist.png
     - assets/icon/creditAcount.png
     - assets/img/creditCardVisa.png
-    - assets/imgBrand/brandNike.jpg
-    - assets/imgBrand/brandApple.jpg
-    - assets/img/flashsalebanner.png
     - assets/icon/flashSaleIcon.png
-    - assets/img/headerProfile.png
     - assets/img/SliderLogin2.png
     - assets/img/SliderLogin3.png
     - assets/img/SliderLogin4.png
@@ -232,11 +196,9 @@ flutter:
     - assets/imgIllustration/IlustrasiOnBoarding1.png
     - assets/imgIllustration/IlustrasiOnBoarding2.png
     - assets/imgIllustration/IlustrasiOnBoarding3.png
-    - assets/avatars/avatar-1.jpg
-    - assets/avatars/avatar-2.jpg
-    - assets/avatars/avatar-3.jpg
-    - assets/avatars/avatar-4.jpg
-    - assets/avatars/avatar-5.jpg
-    - assets/avatars/avatar-6.jpg
     - assets/imgIllustration/IlustrasiCart.png
+    - assets/blogo.png
+    - assets/blogo_bdless.png
+    - assets/blogo_text.png
+    - assets/blogo_wbg.png
 

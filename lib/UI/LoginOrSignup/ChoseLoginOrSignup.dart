@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'package:BloomZon/utils/DxNetwork.dart';
 import 'package:flutter/material.dart';
 import 'package:BloomZon/Library/carousel_pro/carousel_pro.dart';
 import 'package:BloomZon/UI/BottomNavigationBar.dart';
 import 'package:BloomZon/UI/HomeUIComponent/Home.dart';
 import 'package:BloomZon/UI/LoginOrSignup/Login.dart';
 import 'package:BloomZon/UI/LoginOrSignup/Signup.dart';
+
+import '../BzWebview.dart';
 
 
 class ChoseLogin extends StatefulWidget {
@@ -125,8 +128,15 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
                               ),
                               Center(
                                 /// Animation text BloomZon accept from splashscreen layout (Click to open code)
+                                child: Container(
+                                  height: 60,
+                                  child: Image.asset("assets/blogo.png",fit: BoxFit.contain,),
+                                ),
+                              ),
+                              Center(
+                                /// Animation text BloomZon accept from splashscreen layout (Click to open code)
                                 child: Hero(
-                                  tag: "Treva",
+                                  tag: "BZ",
                                   child: Text(
                                     "BloomZon",
                                     style: TextStyle(
@@ -210,7 +220,7 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
                                         Navigator.of(context).pushReplacement(
                                             PageRouteBuilder(
                                                 pageBuilder: (_, __, ___) =>
-                                                    new bottomNavigationBar()));
+                                                    new BzWebView(data: {'url':"${DxNet.baseUrl}?"})));
                                       },
                                       child: Text(
                                         "OR SKIP",

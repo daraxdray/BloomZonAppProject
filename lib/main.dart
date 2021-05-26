@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:BloomZon/UI/BzWebview.dart';
+import 'package:BloomZon/helpers/authhelper.dart';
+import 'package:BloomZon/utils/DxNetwork.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:BloomZon/UI/BottomNavigationBar.dart';
@@ -39,7 +43,10 @@ class myApp extends StatelessWidget {
       /// Move splash screen to ChoseLogin Layout
       /// Routes
       routes: <String, WidgetBuilder>{
-        "login": (BuildContext context) => new onBoarding()
+        "onBoarding": (BuildContext context) => new onBoarding(),
+        "login": (BuildContext context) => new loginScreen(),
+        "home": (BuildContext context) =>  new BzWebView(data: {'url':"${DxNet.baseUrl}?"},)
+
       },
     );
   }
@@ -60,7 +67,21 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   /// To navigate layout change
   void NavigatorPage() {
-    Navigator.of(context).pushReplacementNamed("login");
+
+    xFirstTimexLogin().then((value) {
+      if (value['notFirstTime'] == true && value['isLoggedIn'] == true) {
+          Navigator.of(context).pushReplacementNamed("home");
+          return;
+      }
+      else if(value['notFirstTime'] == true && value['isLoggedIn'] == false){
+        Navigator.of(context).pushReplacementNamed("login");
+        return;
+      }else{
+        sFirstTime().then((value) =>
+            Navigator.of(context).pushReplacementNamed("onBoarding")
+        );
+    }}
+    );
   }
   /// Declare startTime to InitState
   @override
@@ -96,6 +117,11 @@ class _SplashScreenState extends State<SplashScreen> {
                     Padding(
                       padding: EdgeInsets.only(top: 30.0),
                     ),
+                    Container(
+                      width: 50,
+                      height: 50,
+                      child: Image.asset("assets/blogo.png",fit: BoxFit.contain,),
+                    ),
                     /// Text header "Welcome To" (Click to open code)
                     Text(
                       "Welcome to",
@@ -108,7 +134,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                     /// Animation text BloomZon to choose Login with Hero Animation (Click to open code)
                     Hero(
-                      tag: "Treva",
+                      tag: "Bloomzon",
                       child: Text(
                         "BloomZon",
                         style: TextStyle(

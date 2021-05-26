@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:BloomZon/UI/BzWebview.dart';
+import 'package:BloomZon/helpers/authhelper.dart';
+import 'package:BloomZon/utils/DxNetwork.dart';
 import 'package:flutter/material.dart';
 
 import 'package:BloomZon/UI/BottomNavigationBar.dart';
@@ -41,7 +46,7 @@ class _LoginAnimationState extends State<LoginAnimation> {
     widget.animationController.addListener(() {
       if (widget.animation.isCompleted) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => new bottomNavigationBar()));
+            builder: (BuildContext context) => new BzWebView(data: {'url':"${DxNet.baseUrl}?"},)));
       }
     });
 

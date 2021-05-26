@@ -1,0 +1,27 @@
+import 'dart:developer';
+
+import 'package:http/http.dart' as http;
+import 'package:BloomZon/helpers/authhelper.dart';
+import 'package:BloomZon/utils/DxNetwork.dart';
+
+class ApiRep {
+  static final http.Client client = http.Client();
+  DxNet _helper = DxNet(dxClient: client);
+
+  Future<dynamic> get(url, {body = const {}}) async {
+    var shake = true;
+    await _helper.shake("https://google.com");
+    if(shake){
+      var result = await _helper.get(url, body: body);
+      return result;
+    }
+    return {};
+  }
+
+  Future<List> post(url, {body = const {}}) async {
+    var result = await _helper.get(url, body: body);
+    return result;
+  }
+
+
+}

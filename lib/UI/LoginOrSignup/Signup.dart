@@ -1,12 +1,17 @@
 import 'dart:async';
 
+import 'package:BloomZon/bloc/auth/authBloc.dart';
+import 'package:BloomZon/bloc/auth/authEvent.dart';
+import 'package:BloomZon/bloc/auth/authState.dart';
+import 'package:BloomZon/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:BloomZon/UI/BottomNavigationBar.dart';
 import 'package:BloomZon/UI/LoginOrSignup/Login.dart';
 import 'package:BloomZon/UI/LoginOrSignup/LoginAnimation.dart';
 import 'package:BloomZon/UI/LoginOrSignup/Signup.dart';
-
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:select_form_field/select_form_field.dart';
 class Signup extends StatefulWidget {
   @override
   _SignupState createState() => _SignupState();
@@ -17,6 +22,27 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
   AnimationController sanimationController;
   AnimationController animationControllerScreen;
   Animation animationScreen;
+  //AUTHBLOC INSTANCE
+  AuthBloc _authBloc = AuthBloc();
+
+  //INSTANTIATE ALL FORM FIELD CONTROLLER
+  TextEditingController firstNameCtr = TextEditingController();
+  TextEditingController lastNameCtr = TextEditingController();
+  TextEditingController middleNameCtr = TextEditingController();
+  TextEditingController emailCtr    = TextEditingController();
+  TextEditingController passwordCtr = TextEditingController();
+  TextEditingController cPasswordCtr = TextEditingController();
+  TextEditingController _roleCtr = TextEditingController();
+  //END OF FORM FIELDS
+
+  List<Map<String,dynamic>> roleList  = [{'value':'buyer','label':'Buyer'},
+    {'value': 'seller','label':'Seller'},
+    {'value': 'professional_service','label':'Professional Service'},
+    {'value': 'fast_food_grocery','label':'Fast Food Grocery'},
+    {'value': 'networking_associate','label':'Networking Associate'},
+    {'value': 'manufacturer','label':'Manufacturer'},
+  ];
+
   var tap = 0;
 
   /// Set AnimationController to initState
@@ -40,6 +66,7 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
   void dispose() {
     super.dispose();
     sanimationController.dispose();
+    _authBloc.close();
   }
 
   /// Playanimation set forward reverse
@@ -80,117 +107,248 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
                 ),
               ),
               /// Set component layout
-              child: ListView(
-                padding: EdgeInsets.all(0.0),
-                children: <Widget>[
-                  Stack(
-                    alignment: AlignmentDirectional.bottomCenter,
+              child: BlocConsumer(
+                cubit: _authBloc,
+                listener: (context,state){
+                  if(state is AuthFailed){
+                    Fluttertoast.showToast(
+                        msg: state.getError(),
+                        toastLength: Toast.LENGTH_LONG,gravity: ToastGravity.CENTER,backgroundColor: Colors.red[900]);
+                  }
+
+                  if(state is AuthSuccessful){
+                    Fluttertoast.showToast(
+                        msg: "Successful Registration",
+                        toastLength: Toast.LENGTH_LONG,gravity: ToastGravity.CENTER,backgroundColor: Colors.green[900]);
+                    Future.delayed(Duration(seconds: 2),(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> new loginScreen()));
+                    });
+                  }
+                },
+                builder: (context,state){
+                  return ListView(
+                    padding: EdgeInsets.all(0.0),
                     children: <Widget>[
-                      Column(
+                      Stack(
+                        alignment: AlignmentDirectional.bottomCenter,
                         children: <Widget>[
-                          Container(
-                            alignment: AlignmentDirectional.topCenter,
-                            child: Column(
-                              children: <Widget>[
-                                /// padding logo
-                                Padding(
-                                    padding: EdgeInsets.only(
-                                        top:
-                                            mediaQueryData.padding.top + 40.0)),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                alignment: AlignmentDirectional.topCenter,
+                                child: Column(
                                   children: <Widget>[
-                                    Image(
-                                      image: AssetImage("assets/img/Logo.png"),
-                                      height: 70.0,
+                                    /// padding logo
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            top:
+                                            mediaQueryData.padding.top + 40.0)),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Image(
+                                          image: AssetImage("assets/blogo.png"),
+                                          height: 70.0,
+                                        ),
+                                        Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10.0)),
+                                        /// Animation text BloomZon accept from login layout
+                                        Hero(
+                                          tag: "Treva",
+                                          child: Text(
+                                            "BloomZon",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w900,
+                                                letterSpacing: 0.6,
+                                                fontFamily: "Sans",
+                                                color: Colors.white,
+                                                fontSize: 20.0),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    Padding(
+                                        padding:
+                                        EdgeInsets.symmetric(vertical: 30.0)),
+                                    Container(
+                                      height: 40.0,
+                                      width: 200,
+                                      alignment: AlignmentDirectional.center,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(14.0),
+                                          color: Colors.white,
+                                          boxShadow: [BoxShadow(blurRadius: 10.0, color: Colors.black12)]),
+
+                                      child: SelectFormField(
+                                        controller: _roleCtr,
+                                        type: SelectFormFieldType.dropdown,
+                                        cursorColor: Constant.whiteColor,
+                                        decoration: InputDecoration(
+                                          hintText: "Register As?",
+                                          icon: Icon(Icons.location_on,color: Constant.whiteColor,),
+                                          suffixIcon:Icon(Icons.arrow_drop_down,color: Constant.primaryColor ,),
+                                          hintStyle: TextStyle(color: Colors.black26),
+                                          border: InputBorder.none,
+                                        ),
+                                        style: TextStyle(color: Colors.black),
+                                        items:roleList,
+                                        onChanged: (val) => print(val),
+                                        onSaved: (val) => print(val),
+                                      ),
+                                    ),/// TextFromField Email
+                                    Padding(
+                                        padding:
+                                        EdgeInsets.symmetric(vertical: 5.0)),
+                                    /// TextFromField Email
+                                    textFromField(
+                                      icon: Icons.account_circle,
+                                      password: false,
+                                      email: "First name",
+                                      inputType: TextInputType.name,
+                                      controller: firstNameCtr,
+
+                                    ),Padding(
+                                        padding:
+                                        EdgeInsets.symmetric(vertical: 5.0)),
+                                    /// TextFromField Email
+                                    textFromField(
+                                      icon: Icons.account_circle,
+                                      password: false,
+                                      email: "Last name",
+                                      inputType: TextInputType.name,
+                                      controller: lastNameCtr,
+
                                     ),
                                     Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10.0)),
-                                    /// Animation text BloomZon accept from login layout
-                                    Hero(
-                                      tag: "Treva",
-                                      child: Text(
-                                        "BloomZon",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            letterSpacing: 0.6,
-                                            fontFamily: "Sans",
-                                            color: Colors.white,
-                                            fontSize: 20.0),
-                                      ),
+                                        padding:
+                                        EdgeInsets.symmetric(vertical: 5.0)),
+                                    /// TextFromField Email
+                                    textFromField(
+                                      icon: Icons.account_circle,
+                                      password: false,
+                                      email: "Middle name",
+                                      inputType: TextInputType.name,
+                                      controller: middleNameCtr,
+
                                     ),
-                                  ],
-                                ),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 70.0)),
-                                /// TextFromField Email
-                                textFromField(
-                                  icon: Icons.email,
-                                  password: false,
-                                  email: "Email",
-                                  inputType: TextInputType.emailAddress,
-                                ),
-                                Padding(
-                                    padding:
+                                    Padding(
+                                        padding:
+                                        EdgeInsets.symmetric(vertical: 5.0)),
+                                    /// TextFromField Email
+                                    textFromField(
+                                      icon: Icons.email,
+                                      password: false,
+                                      email: "Email",
+                                      inputType: TextInputType.emailAddress,
+                                      controller: emailCtr,
+                                    ),
+                                    Padding(
+                                        padding:
                                         EdgeInsets.symmetric(vertical: 5.0)),
 
-                                /// TextFromField Password
-                                textFromField(
-                                  icon: Icons.vpn_key,
-                                  password: true,
-                                  email: "Password",
-                                  inputType: TextInputType.text,
-                                ),
+                                    /// TextFromField Password
+                                    textFromField(
+                                      icon: Icons.vpn_key,
+                                      password: true,
+                                      email: "Password",
+                                      inputType: TextInputType.text,
+                                      controller: passwordCtr,
+                                    ),
+                                    Padding(
+                                        padding:
+                                        EdgeInsets.symmetric(vertical: 5.0)),
 
-                                /// Button Login
-                                FlatButton(
-                                    padding: EdgeInsets.only(top: 20.0),
-                                    onPressed: () {
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
+                                    /// TextFromField Password
+                                    textFromField(
+                                      icon: Icons.vpn_key,
+                                      password: true,
+                                      email: "Confirm Password",
+                                      inputType: TextInputType.text,
+                                      controller: cPasswordCtr,
+                                    ),
+
+                                    /// Button Login
+                                    FlatButton(
+                                        padding: EdgeInsets.only(top: 20.0),
+                                        onPressed: () {
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext context) =>
                                                   new loginScreen()));
-                                    },
-                                    child: Text(
-                                      " Have Acount? Sign In",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: "Sans"),
-                                    )),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: mediaQueryData.padding.top + 175.0,
-                                      bottom: 0.0),
-                                )
-                              ],
-                            ),
+                                        },
+                                        child: Text(
+                                          " Have Acount? Sign In",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 13.0,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: "Sans"),
+                                        )),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: mediaQueryData.padding.top + 100.0,
+                                          bottom: 0.0),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
+
+                          /// Set Animaion after user click buttonLogin
+                          tap == 0
+                              ? InkWell(
+                            splashColor: Colors.yellow,
+                            onTap: () {
+                             if(middleNameCtr.text.isEmpty || lastNameCtr.text.isEmpty || firstNameCtr.text.isEmpty || passwordCtr.text.isEmpty || emailCtr.text.isEmpty || _roleCtr.text.isEmpty){
+                               Fluttertoast.showToast(
+                                   msg:
+                                   "${firstNameCtr.text.isEmpty?'First Name,':''} ${middleNameCtr.text.isEmpty?'Middle Name,':''} ${lastNameCtr.text.isEmpty?'Last Name,':''} ${passwordCtr.text.isEmpty?'Password,':''} ${emailCtr.text.isEmpty?'Email':''} ${_roleCtr.text.isEmpty?'Role':''} cannot be empty",
+                                   toastLength: Toast.LENGTH_LONG,
+                                   gravity: ToastGravity.BOTTOM,
+                                   backgroundColor: Colors.red[900]);
+                               return;
+                             }
+                             if(passwordCtr.text.length < 6){
+                               Fluttertoast.showToast(
+                                   msg:
+                                   "Password length must be greater than 6",
+                                   toastLength: Toast.LENGTH_LONG,
+                                   gravity: ToastGravity.BOTTOM,
+                                   backgroundColor: Colors.red[900]);
+                               return;
+                             }
+                             if(passwordCtr.text != cPasswordCtr.text ){
+                               Fluttertoast.showToast(
+                                   msg:
+                                   "Password does not match ",
+                                   toastLength: Toast.LENGTH_LONG,
+                                   gravity: ToastGravity.BOTTOM,
+                                   backgroundColor: Colors.red[900]);
+                               return;
+                             }
+                             _authBloc.add(AuthSignUpEvent(
+                                 data: {'email':emailCtr.text,
+                                   'password':passwordCtr.text,
+                                   'password_confirmation':cPasswordCtr.text,
+                                   'firstname':firstNameCtr.text,
+                                   'lastname':lastNameCtr.text,
+                                   'middlename':middleNameCtr.text,
+                                   'account_type': _roleCtr.text}));
+                            },
+                            child: state is AuthProcessing? buttonBlackBottom(Constant.bzLoaderWhite)
+                                : buttonBlackBottom(null),
+                          )
+                              : new LoginAnimation(
+                            animationController: sanimationController.view,
+                          )
                         ],
                       ),
-
-                      /// Set Animaion after user click buttonLogin
-                      tap == 0
-                          ? InkWell(
-                              splashColor: Colors.yellow,
-                              onTap: () {
-                                setState(() {
-                                  tap = 1;
-                                });
-                                _PlayAnimation();
-                                return tap;
-                              },
-                              child: buttonBlackBottom(),
-                            )
-                          : new LoginAnimation(
-                              animationController: sanimationController.view,
-                            )
                     ],
-                  ),
-                ],
+                  );
+              },
               ),
             ),
           ),
@@ -206,8 +364,8 @@ class textFromField extends StatelessWidget {
   String email;
   IconData icon;
   TextInputType inputType;
-
-  textFromField({this.email, this.icon, this.inputType, this.password});
+  TextEditingController controller;
+  textFromField({this.email, this.icon, this.inputType, this.password, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -227,6 +385,7 @@ class textFromField extends StatelessWidget {
             hintColor: Colors.transparent,
           ),
           child: TextFormField(
+            controller: controller,
             obscureText: password,
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -249,8 +408,14 @@ class textFromField extends StatelessWidget {
   }
 }
 
+
+
 ///ButtonBlack class
 class buttonBlackBottom extends StatelessWidget {
+  Widget content;
+  buttonBlackBottom(this.content);
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -258,7 +423,7 @@ class buttonBlackBottom extends StatelessWidget {
       child: Container(
         height: 55.0,
         width: 600.0,
-        child: Text(
+        child: content == null?Text(
           "Sign Up",
           style: TextStyle(
               color: Colors.white,
@@ -266,7 +431,7 @@ class buttonBlackBottom extends StatelessWidget {
               fontFamily: "Sans",
               fontSize: 18.0,
               fontWeight: FontWeight.w800),
-        ),
+        ):content,
         alignment: FractionalOffset.center,
         decoration: BoxDecoration(
             boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 15.0)],

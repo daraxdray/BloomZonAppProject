@@ -250,6 +250,7 @@ class category extends StatelessWidget {
                   padding: EdgeInsets.only(right: padding),
                   child: Image.asset(
                     image,
+                    color: Color.fromARGB(250,32,0,159),
                     height: 25.0,
                   ),
                 ),

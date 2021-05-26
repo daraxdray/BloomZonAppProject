@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:BloomZon/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/Models/page_bubble_view_model.dart';
 
@@ -30,7 +31,7 @@ class PageBubble extends StatelessWidget {
               //Alpha is used to create fade effect for background color
               color: viewModel.isHollow
                   ? Colors.white24
-                  : Colors.deepPurpleAccent,
+                  : Constant.primaryColor,
               border: new Border.all(
                 color: viewModel.isHollow
                     ? viewModel.bubbleBackgroundColor.withAlpha(
