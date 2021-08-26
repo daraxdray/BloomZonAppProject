@@ -1,15 +1,17 @@
 import 'dart:async';
-import 'package:BloomZon/utils/DxNetwork.dart';
+import 'dart:developer';
+import 'package:bloomzon/utils/DxNetwork.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:BloomZon/UI/BzWebview.dart';
-import 'package:BloomZon/bloc/auth/authBloc.dart';
-import 'package:BloomZon/bloc/auth/authEvent.dart';
-import 'package:BloomZon/bloc/auth/authState.dart';
-import 'package:BloomZon/constant/constant.dart';
+import 'package:bloomzon/UI/BzWebview.dart';
+import 'package:bloomzon/bloc/auth/authBloc.dart';
+import 'package:bloomzon/bloc/auth/authEvent.dart';
+import 'package:bloomzon/bloc/auth/authState.dart';
+import 'package:bloomzon/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:BloomZon/UI/LoginOrSignup/LoginAnimation.dart';
-import 'package:BloomZon/UI/LoginOrSignup/Signup.dart';
+import 'package:bloomzon/UI/LoginOrSignup/LoginAnimation.dart';
+import 'package:bloomzon/UI/LoginOrSignup/Signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class lgs extends StatefulWidget {
@@ -24,6 +26,10 @@ class _lgsState extends State<lgs>
   AuthBloc _authBloc = new AuthBloc();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
+  TextEditingController phoneCtr    = TextEditingController();
+  //END OF FORM FIELDS
+  List<bool> isSelected = [true,false];
+  PhoneNumber _phoneNumber = PhoneNumber(isoCode: 'NG');
   var tap = 0;
   bool rMe = true;
 
@@ -44,6 +50,7 @@ class _lgsState extends State<lgs>
   /// set state animation controller
   void initState() {
     rMe = false;
+    isSelected = [true,false];
     sanimationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 800))
           ..addStatusListener((statuss) {
@@ -62,7 +69,7 @@ class _lgsState extends State<lgs>
   @override
   void dispose() {
     super.dispose();
-    sanimationController.dispose();
+    // sanimationController.dispose();
     _authBloc.close();
 
 
@@ -84,7 +91,7 @@ class _lgsState extends State<lgs>
     // mediaQueryData.size.width;
     // mediaQueryData.size.height;
     return BlocConsumer(
-        cubit:_authBloc,
+        bloc:_authBloc,
         listener:(context,state){
           if (state is AuthFailed) {
             Fluttertoast.showToast(
@@ -129,13 +136,13 @@ class _lgsState extends State<lgs>
                             /// padding logo
                             Padding(
                                 padding: EdgeInsets.only(
-                                    top: mediaQueryData.padding.top + 40.0)),
+                                    top: mediaQueryData.padding.top + 20.0)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Image(
                                   image: AssetImage("assets/blogo.png"),
-                                  height: 70.0,
+                                  height: 50.0,
                                 ),
                                 Padding(
                                     padding:
@@ -159,13 +166,19 @@ class _lgsState extends State<lgs>
 
                             /// ButtonCustomFacebook
                             Padding(
-                                padding: EdgeInsets.symmetric(vertical: 30.0)),
-                            buttonCustomFacebook(),
+                                padding: EdgeInsets.symmetric(vertical: 20.0)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                buttonCustomFacebook(),
+                                buttonCustomGoogle(),
+                              ],
+                            ),
 
                             /// ButtonCustomGoogle
                             Padding(
                                 padding: EdgeInsets.symmetric(vertical: 7.0)),
-                            buttonCustomGoogle(),
+
                             /// Set Text
                             Padding(
                                 padding: EdgeInsets.symmetric(vertical: 10.0)),
@@ -178,17 +191,79 @@ class _lgsState extends State<lgs>
                                   fontFamily: 'Sans',
                                   fontSize: 17.0),
                             ),
+                            Padding(
+                                padding:
+                                EdgeInsets.symmetric(vertical: 5.0)),
+                            ToggleButtons(
+                                children: [
+                                  Icon(Icons.email,color: Colors.white,),
+                                  Icon(Icons.phone,color: Colors.white,),
+                                ],
+                                selectedBorderColor: Colors.blue,
+                                borderRadius: BorderRadius.circular(20),
+                                onPressed: (index){
+                                  for(int i = 0; i < isSelected.length; i++) {
 
+                                    setState(() {
+                                      if(i == index){
+                                        isSelected[i] = true;
+                                      }else{
+                                        isSelected[i] = false;
+                                      }
+                                    });
+                                  }
+
+                                },
+                                isSelected:isSelected),
                             /// TextFromField Email
                             Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.0)),
-                            textFromField(
+                                padding: EdgeInsets.symmetric(vertical: 5.0)),
+                            isSelected[0]?textFromField(
                               icon: Icons.email,
                               password: false,
                               email: "Email",
                               inputType: TextInputType.emailAddress,
                               txController: emailController,
-                            ),
+                            ):
+          Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          child: Container(
+          alignment: AlignmentDirectional.center,
+          decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14.0),
+          color: Colors.white,
+          boxShadow: [BoxShadow(blurRadius: 10.0, color: Colors.black12)]),
+          padding: EdgeInsets.only(left: 20.0, right: 30.0, top: 0.0, bottom: 0.0),
+          child: Theme(
+          data: ThemeData(
+          hintColor: Colors.transparent,
+          ),
+          child:
+          InternationalPhoneNumberInput(
+          onInputChanged: (PhoneNumber number) {
+          phoneCtr.text = number.phoneNumber;
+          },
+          onInputValidated: (bool value) {
+          print(value);
+          },
+          selectorConfig: SelectorConfig(
+          selectorType: PhoneInputSelectorType.DIALOG,useEmoji: true,
+          ),
+          ignoreBlank: false,
+          autoValidateMode: AutovalidateMode.onUserInteraction,
+          selectorTextStyle: TextStyle(color: Colors.black),
+          initialValue: _phoneNumber,
+          formatInput: false,
+          searchBoxDecoration: InputDecoration(
+          icon: Icon(Icons.search),
+          hintText: "Search your country",
+          disabledBorder: InputBorder.none,
+          border: InputBorder.none,
+
+
+          ),
+
+          )))),
 
                             /// TextFromField Password
                             Padding(
@@ -215,8 +290,9 @@ class _lgsState extends State<lgs>
                               ],
                             ),
                             /// Button Signup
-                            FlatButton(
-                                padding: EdgeInsets.only(top: 20.0),
+                            Container(
+          child: TextButton(
+                                //
                                 onPressed: () {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
@@ -230,9 +306,10 @@ class _lgsState extends State<lgs>
                                       fontSize: 13.0,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: "Sans"),
-                                )),
-                            FlatButton(
-                                padding: EdgeInsets.only(top: 10.0),
+                                ))),
+                            Container(
+
+                                child: TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
@@ -246,27 +323,24 @@ class _lgsState extends State<lgs>
                                       fontSize: 13.0,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: "Sans"),
-                                )),
+                                ))),
 
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: mediaQueryData.padding.top ,
-                                  top: 0.0),
-                            ),
                             tap == 0
                                 ? InkWell(
                               splashColor: Colors.yellow,
                               onTap: () {
-                                if(emailController.text.isEmpty || passController.text.isEmpty){
+                                if((emailController.text.isEmpty && phoneCtr.text.isEmpty) || passController.text.isEmpty){
                                   Fluttertoast.showToast(
                                       msg:
-                                      "Email or Password cannot be empty",
+                                      "Email/Phone or Password cannot be empty",
                                       toastLength: Toast.LENGTH_LONG,
                                       gravity: ToastGravity.BOTTOM,
                                       backgroundColor: Colors.red[900]);
                                   return;
                                 }
-                                _authBloc.add(AuthSignInEvent(rMe,usernameOrEmail: emailController.text,password:passController.text));
+                                String emPhone = isSelected[0] == true?emailController.text:phoneCtr.text;
+                                bool isEmail = isSelected[0] == true?true:false;
+                                _authBloc.add(AuthSignInEvent(rMe,isEmail:isEmail,usernameOrEmail: emPhone,password:passController.text));
 
                               },
                               child: state is AuthProcessing? buttonBlackBottom(Constant.bzLoaderWhite)
@@ -383,52 +457,69 @@ class textFromField extends StatelessWidget {
 
 ///buttonCustomFacebook class
 class buttonCustomFacebook extends StatelessWidget {
+  final labelText;
+  buttonCustomFacebook({this.labelText});
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-      child: Container(
-        alignment: FractionalOffset.center,
-        height: 49.0,
-        width: 500.0,
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(107, 112, 248, 1.0),
-          borderRadius: BorderRadius.circular(40.0),
-          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 15.0)],
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: InkWell(
+        onTap: ()=>
+        Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+        builder: (BuildContext context) =>
+        new BzWebView(data: {'url':"${DxNet.baseUrl}/social-login/redirect/facebook?"},))),
+        child: Container(
+          alignment: FractionalOffset.center,
+          padding: EdgeInsets.all(10),
+          height: 49.0,
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(107, 112, 248, 1.0),
+            borderRadius: BorderRadius.circular(40.0),
+            boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 15.0)],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                "assets/img/icon_facebook.png",
+                height: 20.0,
+              ),
+              Padding(padding: EdgeInsets.symmetric(horizontal: 7.0)),
+              Text(
+                labelText == null?"Login With Facebook":"$labelText With Facebook",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Sans'),
+              ),
+            ],
+          ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              "assets/img/icon_facebook.png",
-              height: 25.0,
-            ),
-            Padding(padding: EdgeInsets.symmetric(horizontal: 7.0)),
-            Text(
-              "Login With Facebook",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Sans'),
-            ),
-          ],
-        ),
-      ),
+      )
     );
   }
 }
-
+// https://www.bloomzon.com
 ///buttonCustomGoogle class
 class buttonCustomGoogle extends StatelessWidget {
+  final labelText;
+  buttonCustomGoogle({this.labelText});
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-      child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: InkWell(
+      onTap: ()=>
+      Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+      builder: (BuildContext context) =>
+      new BzWebView(data: {'url':"${DxNet.baseUrl}/social-login/redirect/google?"},))),
+      child:  Container(
         alignment: FractionalOffset.center,
+        padding: EdgeInsets.all(10),
         height: 49.0,
-        width: 500.0,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10.0)],
@@ -439,20 +530,20 @@ class buttonCustomGoogle extends StatelessWidget {
           children: <Widget>[
             Image.asset(
               "assets/img/google.png",
-              height: 25.0,
+              height: 20.0,
             ),
             Padding(padding: EdgeInsets.symmetric(horizontal: 7.0)),
             Text(
-              "Login With Google",
+              labelText == null?"Login With Google":"$labelText With Google",
               style: TextStyle(
                   color: Colors.black26,
-                  fontSize: 15.0,
+                  fontSize: 12.0,
                   fontWeight: FontWeight.w500,
                   fontFamily: 'Sans'),
             )
           ],
         ),
-      ),
+      )),
     );
   }
 }
@@ -464,7 +555,7 @@ class buttonBlackBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(30.0),
+      padding: EdgeInsets.only(left:30.0,right: 30.0),
       child: Container(
         height: 55.0,
         width: 600.0,
@@ -482,7 +573,7 @@ class buttonBlackBottom extends StatelessWidget {
             boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 15.0)],
             borderRadius: BorderRadius.circular(30.0),
             gradient: LinearGradient(
-                colors: <Color>[Color(0xFF121940), Constant.primaryColor])),
+                colors: <Color>[Color(0xFF121940), Constant.secondaryColor])),
       ),
     );
   }

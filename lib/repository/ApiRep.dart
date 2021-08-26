@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import 'package:BloomZon/helpers/authhelper.dart';
-import 'package:BloomZon/utils/DxNetwork.dart';
+import 'package:bloomzon/helpers/authhelper.dart';
+import 'package:bloomzon/utils/DxNetwork.dart';
 
 class ApiRep {
   static final http.Client client = http.Client();

@@ -2,13 +2,13 @@
 
 import 'dart:developer';
 
-import 'package:BloomZon/repository/ApiRep.dart';
+import 'package:bloomzon/repository/ApiRep.dart';
 import 'package:http/http.dart';
-import 'package:BloomZon/utils/DxNetwork.dart';
+import 'package:bloomzon/utils/DxNetwork.dart';
 
 List<Map<String,dynamic>> getLocationList(List<dynamic> list, {bool getId = false}){
 
-  List<Map<String,dynamic>> newList = List();
+  List<Map<String,dynamic>> newList = [];
 
   //return the ID as the value if getID is true frpm parameter
   if(getId){
@@ -26,7 +26,7 @@ List<Map<String,dynamic>> getLocationList(List<dynamic> list, {bool getId = fals
 
 List<Map<String,dynamic>> getRolesList(List<dynamic> list){
 
-  List<Map<String,dynamic>> newList = List();
+  List<Map<String,dynamic>> newList = [];
 
   for(int i = 0; i < list.length; i++ ){
     var value = {'value': list[i]['role_type'].toString(), 'label': list[i]['role_type']};

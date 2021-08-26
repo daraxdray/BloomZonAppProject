@@ -1,12 +1,9 @@
 import 'dart:developer';
 
-import 'package:BloomZon/UI/BzWebview.dart';
-import 'package:BloomZon/helpers/authhelper.dart';
-import 'package:BloomZon/utils/DxNetwork.dart';
+import 'package:bloomzon/UI/BzWebview.dart';
+import 'package:bloomzon/helpers/authhelper.dart';
+import 'package:bloomzon/utils/DxNetwork.dart';
 import 'package:flutter/material.dart';
-
-import 'package:BloomZon/UI/BottomNavigationBar.dart';
-import 'package:BloomZon/UI/HomeUIComponent/Home.dart';
 /// Componen Login Animation to set Animation in login like a bounce ball to fullscreen
 class LoginAnimation extends StatefulWidget {
   /// To set type animation and  start and end animation
@@ -40,6 +37,13 @@ class LoginAnimation extends StatefulWidget {
 }
 
 class _LoginAnimationState extends State<LoginAnimation> {
+
+  @override
+  void dispose() {
+    widget.animationController.dispose();
+    super.dispose();
+
+  }
   @override
   /// To navigation after animation complete
   Widget build(BuildContext context) {

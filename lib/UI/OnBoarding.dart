@@ -1,8 +1,8 @@
-import 'package:BloomZon/constant/constant.dart';
+import 'package:bloomzon/constant/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
-import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/intro_views_flutter.dart';
-import 'package:BloomZon/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
+import 'package:bloomzon/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
+import 'package:bloomzon/Library/intro_views_flutter-2.4.0/lib/intro_views_flutter.dart';
+import 'package:bloomzon/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
 
 class onBoarding extends StatefulWidget {
   @override

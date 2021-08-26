@@ -1,4 +1,4 @@
-import 'package:BloomZon/utils/DxNetwork.dart';
+import 'package:bloomzon/utils/DxNetwork.dart';
 
 class NavigationRepository{
 

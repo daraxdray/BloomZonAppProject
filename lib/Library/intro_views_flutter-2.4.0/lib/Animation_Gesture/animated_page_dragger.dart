@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
-import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/Models/slide_update_model.dart';
+import 'package:bloomzon/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
+import 'package:bloomzon/Library/intro_views_flutter-2.4.0/lib/Models/slide_update_model.dart';
 
 /// This class provides the animation controller
 /// used when then user stops dragging and page

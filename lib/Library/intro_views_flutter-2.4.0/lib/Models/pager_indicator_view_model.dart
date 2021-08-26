@@ -1,6 +1,6 @@
 
-import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
-import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
+import 'package:bloomzon/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
+import 'package:bloomzon/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
 
 //view model for page indicator
 

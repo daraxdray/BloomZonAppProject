@@ -1,7 +1,7 @@
 //import 'package:flutter_bloc/flutter_bloc.dart';
-//import 'package:BloomZon/bloc/navigation/navigationEvent.dart';
-//import 'package:BloomZon/bloc/navigation/navigationState.dart';
-//import 'package:BloomZon/repository/NavigationRepository.dart';
+//import 'package:bloomzon/bloc/navigation/navigationEvent.dart';
+//import 'package:bloomzon/bloc/navigation/navigationState.dart';
+//import 'package:bloomzon/repository/NavigationRepository.dart';
 //
 //class NavBloc extends Bloc<NavEvent, NavState> {
 //  NavigationRepository _navRepo;

@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:BloomZon/helpers/helpers.dart';
-import 'package:BloomZon/repository/ApiRep.dart';
-import 'package:BloomZon/utils/CustomException.dart';
+import 'package:bloomzon/helpers/helpers.dart';
+import 'package:bloomzon/repository/ApiRep.dart';
+import 'package:bloomzon/utils/CustomException.dart';
 import 'ApiEvent.dart';
 import 'ApiState.dart';
 

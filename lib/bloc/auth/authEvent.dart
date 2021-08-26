@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:BloomZon/bloc/auth/authState.dart';
+import 'package:bloomzon/bloc/auth/authState.dart';
 
 abstract class AuthEvent extends Equatable{
   @override
@@ -11,8 +11,9 @@ abstract class AuthEvent extends Equatable{
 class AuthSignInEvent extends AuthEvent{
   final usernameOrEmail;
   final password;
+  final bool isEmail;
   final bool rememberMe;
-  AuthSignInEvent(this.rememberMe, {this.usernameOrEmail, this.password});
+  AuthSignInEvent(this.rememberMe, {this.isEmail,this.usernameOrEmail, this.password});
 
 }
 

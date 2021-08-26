@@ -25,7 +25,7 @@ class AuthFailed extends AuthState{
 
   getError(){
     Map<String,dynamic> err = this.error['errors'];
-
+    print(err);
     var newErr;
     err.forEach((key, value) {
       newErr = value;
@@ -34,7 +34,12 @@ class AuthFailed extends AuthState{
   }
 
   getMessage(){
+    if(this.error.runtimeType == String){
+    return this.error;
+    }
+
     return this.error['message'];
+
   }
 }
 

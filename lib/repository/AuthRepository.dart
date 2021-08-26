@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:BloomZon/helpers/authhelper.dart';
-import 'package:BloomZon/utils/DxNetwork.dart';
+import 'package:bloomzon/helpers/authhelper.dart';
+import 'package:bloomzon/utils/DxNetwork.dart';
 import 'package:http/http.dart' as http;
 
 class AuthRepository{
@@ -10,11 +10,12 @@ class AuthRepository{
   DxNet _helper = DxNet(dxClient: client );
   var user;
 
-  Future<dynamic> login(rMe, username,password) async {
-    var userInfo = {"email":username,"password":password};
+  Future<dynamic> login(rMe, username,password,bool isEmail) async {
+
+    var userInfo = isEmail == true? {"email":username,"password":password,"notRider":"true"}: {"phone":"$username","password":password,"notRider":"true"};
 
     final response = await _helper.post("auth/login",body:userInfo);
-
+    log("USER DETAILS",error: response);
     if(response['user'] == null )
     {
       return response;
@@ -25,7 +26,6 @@ class AuthRepository{
       response['user']['remember_me'] = rMe;
       userLogin(response['user']);
       return response;
-
 
   }
 

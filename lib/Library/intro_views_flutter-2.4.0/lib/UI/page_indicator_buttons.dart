@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
+import 'package:bloomzon/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
 
-import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/Models/page_button_view_model.dart';
+import 'package:bloomzon/Library/intro_views_flutter-2.4.0/lib/Models/page_button_view_model.dart';
 
 /// Skip button class
 
@@ -33,7 +33,7 @@ class SkipButton extends StatelessWidget {
       opacity = pageButtonViewModel.slidePercent;
     }
 
-    return FlatButton(
+    return TextButton(
       onPressed: onTap,
       child: Opacity(
         opacity: opacity,
@@ -72,7 +72,7 @@ class DoneButton extends StatelessWidget {
       opacity = 1.0 - pageButtonViewModel.slidePercent;
     }
 
-    return FlatButton(
+    return TextButton(
       onPressed: onTap,
       child: Opacity(
         opacity: opacity,

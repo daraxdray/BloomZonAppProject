@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:BloomZon/UI/BzWebview.dart';
-import 'package:BloomZon/helpers/authhelper.dart';
-import 'package:BloomZon/utils/DxNetwork.dart';
+import 'package:bloomzon/UI/BzWebview.dart';
+import 'package:bloomzon/helpers/authhelper.dart';
+import 'package:bloomzon/utils/DxNetwork.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:BloomZon/UI/BottomNavigationBar.dart';
-import 'package:BloomZon/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
-import 'package:BloomZon/UI/HomeUIComponent/Home.dart';
-import 'package:BloomZon/UI/LoginOrSignup/Login.dart';
-import 'package:BloomZon/UI/OnBoarding.dart';
+import 'package:bloomzon/UI/BottomNavigationBar.dart';
+import 'package:bloomzon/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
+// import 'package:bloomzon/UI/HomeUIComponent/Home.dart';
+import 'package:bloomzon/UI/LoginOrSignup/Login.dart';
+import 'package:bloomzon/UI/OnBoarding.dart';
 
 /// Run first apps open
 void main() {
@@ -63,10 +63,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   /// Setting duration in splash screen
   startTime() async {
-    return new Timer(Duration(milliseconds: 4500), NavigatorPage);
+    return new Timer(Duration(milliseconds: 4500), navigatorPage);
   }
   /// To navigate layout change
-  void NavigatorPage() {
+  void navigatorPage() {
 
     xFirstTimexLogin().then((value) {
       if (value['notFirstTime'] == true && value['isLoggedIn'] == true) {

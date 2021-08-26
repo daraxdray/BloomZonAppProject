@@ -1,4 +1,4 @@
-package com.example.BloomZon;
+package com.simplifiedg.BloomZon;
 
 import io.flutter.embedding.android.FlutterActivity;
 

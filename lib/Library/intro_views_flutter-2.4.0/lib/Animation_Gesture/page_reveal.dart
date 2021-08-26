@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:BloomZon/Library/intro_views_flutter-2.4.0/lib/Clipper/circular_reveal_clipper.dart';
+import 'package:bloomzon/Library/intro_views_flutter-2.4.0/lib/Clipper/circular_reveal_clipper.dart';
 
 /// This class reveals the next page in the circular form.
 

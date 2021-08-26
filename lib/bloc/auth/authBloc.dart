@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:BloomZon/bloc/auth/authEvent.dart';
-import 'package:BloomZon/bloc/auth/authState.dart';
-import 'package:BloomZon/helpers/authhelper.dart';
-import 'package:BloomZon/repository/AuthRepository.dart';
+import 'package:bloomzon/bloc/auth/authEvent.dart';
+import 'package:bloomzon/bloc/auth/authState.dart';
+import 'package:bloomzon/helpers/authhelper.dart';
+import 'package:bloomzon/repository/AuthRepository.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthRepository _authrep;
@@ -30,9 +30,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield AuthProcessing();
       try {
 
-        var response = await _authrep.login(event.rememberMe,event.usernameOrEmail, event.password);
+        var response = await _authrep.login(event.rememberMe,event.usernameOrEmail, event.password,event.isEmail);
 
-        if(response['errors'] == null && response['message'] == null){
+        if(response.runtimeType != String && (response['errors'] == null && response['message'] == null)){
           // await storeVCode(response);
           yield AuthSuccessful(data: response);
         }else{
@@ -40,7 +40,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
 
       } catch (e) {
-        print(e);
         yield AuthFailed(error: "Unable to login");
       }
     }

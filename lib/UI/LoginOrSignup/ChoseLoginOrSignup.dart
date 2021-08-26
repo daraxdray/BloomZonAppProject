@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'package:BloomZon/utils/DxNetwork.dart';
+import 'package:bloomzon/utils/DxNetwork.dart';
 import 'package:flutter/material.dart';
-import 'package:BloomZon/Library/carousel_pro/carousel_pro.dart';
-import 'package:BloomZon/UI/BottomNavigationBar.dart';
-import 'package:BloomZon/UI/HomeUIComponent/Home.dart';
-import 'package:BloomZon/UI/LoginOrSignup/Login.dart';
-import 'package:BloomZon/UI/LoginOrSignup/Signup.dart';
+import 'package:bloomzon/Library/carousel_pro/carousel_pro.dart';
+import 'package:bloomzon/UI/BottomNavigationBar.dart';
+import 'package:bloomzon/UI/LoginOrSignup/Login.dart';
+import 'package:bloomzon/UI/LoginOrSignup/Signup.dart';
 
 import '../BzWebview.dart';
 
@@ -60,7 +59,7 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
-    mediaQuery.devicePixelRatio;
+    // mediaQuery.devicePixelRatio;
     mediaQuery.size.height;
     mediaQuery.size.width;
     return Scaffold(

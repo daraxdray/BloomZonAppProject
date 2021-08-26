@@ -3,8 +3,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Constant {
   static Color scaffoldBgColor = Color(0xFFFAF9F7);
- static Color primaryColor = Color.fromARGB(255, 29, 68, 184);
   static Color greyColor = Colors.grey;
+ static Color primaryColor = Color.fromARGB(255, 29, 68, 184);
+ static Color secondaryColor = Color.fromARGB(255, 255, 0, 0);
   static Color whiteColor = Colors.white;
   static Color blackColor = Colors.black;
   static Color lightPrimaryColor = primaryColor.withOpacity(0.2);

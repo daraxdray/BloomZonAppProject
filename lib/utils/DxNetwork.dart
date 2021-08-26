@@ -12,8 +12,10 @@ class DxNet {
   // String get apiKey => _apiKey;
   var queryLink;
   final http.Client dxClient;
-  static final baseUrl = "https://ecm.bloomzon.com/";
-  static final localUrl = "https://ecm.bloomzon.com/api/v1/";
+  // static final baseUrl = "http://192.168.43.119/bloomzon-store/";
+  static final baseUrl = "https://bloomzon.com/";
+  static final localUrl = "https://bloomzon.com/api/v1/";
+  // static final localUrl = "http://192.168.43.119/bloomzon-store/api/v1/";
   static const SSK      = "04a5cd34a972eb13c74261d8457b2d7a";
   final defaultHeader  =  {'Accept': "application/json",
                             'ssk':SSK
@@ -25,7 +27,7 @@ class DxNet {
     var responseJson;
 
     try {
-      final response = await dxClient.get(localUrl + url,headers: headers ?? defaultHeader);
+      final response = await dxClient.get(Uri(path: localUrl + url),headers: headers ?? defaultHeader);
       if (response.statusCode == 200) {
         responseJson = _response(response);
       } else {
@@ -39,7 +41,7 @@ class DxNet {
   }
   Future<dynamic> shake(String url, {body ,headers = const {'Accept': "Application/json"}}) async {
   try{
-      final response = await dxClient.get(url,headers: headers);
+      final response = await dxClient.get(Uri(path: url),headers: headers);
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -59,10 +61,11 @@ class DxNet {
     var responseJson;
     try {
       final result = await http
-          .post(localUrl + url,
+          .post(Uri(path: localUrl + url),
               body: body, headers: headers, encoding: encoding)
           .then((http.Response response) {
         final String res = response.body;
+
         final int statusCode = response.statusCode;
         if (statusCode < 200 || json == null) {
           throw new Exception(
